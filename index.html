@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Interest Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        h1 {
+            font-size: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+        input[type="number"], select {
+            width: 150px;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        mark {
+            background-color: #ffff99;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        function compute() {
+            // Get values from the input fields
+            var principal = document.getElementById("principal").value;
+            var rate = document.getElementById("rate").value;
+            var years = document.getElementById("years").value;
+            
+            // Validation for principal amount
+            if (principal <= 0 || principal == "") {
+                alert("Please enter a positive number for the principal amount.");
+                document.getElementById("principal").focus();
+                return;
+            }
+
+            // Calculate the interest
+            var interest = (principal * years * rate) / 100;
+            
+            // Calculate the future year
+            var currentYear = new Date().getFullYear();
+            var futureYear = currentYear + parseInt(years);
+
+            // Display the result
+            document.getElementById("result").innerHTML = 
+                "If you deposit <mark>" + principal + "</mark>,<br>" +
+                "at an interest rate of <mark>" + rate + "%</mark>.<br>" +
+                "You will receive an amount of <mark>" + interest + "</mark>,<br>" +
+                "in the year <mark>" + futureYear + "</mark>";
+        }
+
+        function updateRate() {
+            // Update the span element to show the current slider value
+            var rateval = document.getElementById("rate").value;
+            document.getElementById("rate_val").innerText = rateval + "%";
+        }
+    </script>
+</head>
+<body>
+
+    <div class="calculator-box">
+        <h1>Simple Interest Calculator</h1>
+        
+        <div class="input-group">
+            <label for="principal">Amount</label>
+            <input type="number" id="principal" name="principal" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="rate">Interest Rate</label>
+            <input type="range" id="rate" name="rate" min="1" max="20" step="0.25" value="10" onchange="updateRate()">
+            <span id="rate_val">10%</span>
+        </div>
+        
+        <div class="input-group">
+            <label for="years">No. of Years</label>
+            <select id="years" name="years">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        
+        <button onclick="compute()">Compute Interest</button>
+        
+        <div id="result"></div>
+    </div>
+
+</body>
+</html>
